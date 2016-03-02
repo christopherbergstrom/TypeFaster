@@ -26,7 +26,8 @@ function createButtons()
   start.addEventListener("click", function()
   {
     // clearButtons(start, score);
-    getWord(word);
+    startGame();
+    start.parentNode.removeChild(start);
   });
 
   score.addEventListener("click", function()
@@ -54,18 +55,28 @@ function createButtons()
 
 function clearButtons(start, score, menu)
 {
-  if (start)
+  if(start)
   {
     start.parentNode.removeChild(start);
   }
-  if (score)
+  if(score)
   {
     score.parentNode.removeChild(score);
   }
-  if (menu)
+  if(menu)
   {
     menu.parentNode.removeChild(menu);
   }
+}
+
+function startGame()
+{
+  var strikes = 0;
+  do
+  {
+    getWord(word);
+    strikes ++;
+  } while (strikes < 4);
 }
 
 // var add = document.add;
