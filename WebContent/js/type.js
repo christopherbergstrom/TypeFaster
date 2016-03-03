@@ -3,16 +3,19 @@ window.onload = function()
   init();
 };
 
-function init()
-{
-  createButtons();
-}
-
 var body = document.querySelector("body");
 var buttons = document.getElementById("buttons");
 var currentTime = document.getElementById("currentTime");
-currentTime.innerHTML = 0;
+currentTime.innerHTML = 5;
 var time = 0;
+var wordPlay;
+
+function init()
+{
+  console.log(currentTime.innerHTML);
+  createButtons();
+}
+
 
 function createButtons()
 {
@@ -75,9 +78,9 @@ function clearButtons(start, score, menu)
 var points = 0;
 var strikes = 0;
 
-var number = 5500;
-var currentTime = number/1000;
+var number = 6;
 var time;
+
 var wordComputer;
 var wordUser;
 
@@ -96,7 +99,7 @@ input.setAttribute("placeholder", "TYPE HERE!!!");
 function startGame()
 {
   console.log("in start game");
-  number -= 500;
+
 
   form.appendChild(input);
   form.appendChild(submit);
@@ -106,8 +109,10 @@ function startGame()
   do
   {
     console.log("in do while loop");
-    console.log(strikes);
-    gameLogic();
+    console.log("strikes: "+strikes);
+    getWord(word);
+    // gameLogic();
+    strikes++;
   } while (strikes < 4);
 
   gameOver();
@@ -120,17 +125,18 @@ function gameLogic()
 
   input.value = "";
   input.focus();
-
+  wordComputer = wordPlay;
+  // console.log("wordComputer: "+wordComputer);
+  // console.log("wordPlay: "+wordPlay);
   startTime();
-  wordComputer = getWord(word);
-
   form.addEventListener("click", function(e)
   {
     e.preventDefault();
     wordUser = document.form.input.value;
+    var equal = wordUser.localeCompare(wordComputer);
+    // console.log(equal);
   });
-
-  if(wordUser === wordComputer && currentTime.innerHTML >= 0)
+  if(equal === 0 && currentTime.innerHTML >= 0)
   {
     points ++;
   }
@@ -154,18 +160,18 @@ function gameOver()
 function startTime()
 {
   console.log("in start time");
+  number --;
   // amount of time to type word
-  // currentTime.innerHTML = amount.value;
-  currentTime.innerHTML = 5;
+  // console.log("test1");
+  currentTime.innerHTML = number;
+  // console.log("test2");
   time = setInterval(function()
   {
+    console.log("in set interval");
+    // console.log(currentTime.innerHTML);
     currentTime.innerHTML --;
     if (currentTime.innerHTML <= 0)
     {
-      var h1 = document.createElement("h1");
-      h1.setAttribute("id", "h1");
-      h1.innerHTML = "TIME OUT";
-      body.appendChild(h1);
       stopTime();
     }
   }, 1000);
@@ -173,6 +179,7 @@ function startTime()
 
 function stopTime()
 {
+  console.log("in stop time");
   window.setTimeout(function(e){clearInterval(time)}, 0);
 }
 
@@ -221,19 +228,6 @@ function stopTime()
 // }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 var getWord = function(callback)
 {
   var xhr = new XMLHttpRequest();
@@ -255,11 +249,12 @@ function word(word)
   p.parentNode.removeChild(p);
   var p = document.createElement("p");
   p.setAttribute("id", "p");
-  // p.value = word.word;
+  p.value = word.word;
   p.innerHTML = word.word;
+  wordPlay = word.word;
+  console.log("wordPlay: " + wordPlay);
   body.insertBefore(p, document.form);
-  body.insertBefore(ul, document.contact);
-  // body.appendChild(p);
+  gameLogic();
 }
 
 var getScores = function(callback)

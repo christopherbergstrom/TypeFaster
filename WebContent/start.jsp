@@ -10,8 +10,8 @@
 	<body>
 		<h1>Type Faster</h1>
 		<div id = "buttons"></div>
-		<p id = "p"></p>
 		<div id = "currentTime"></div>
+		<p id = "p"></p>
 		<script src = "js/type.js"></script>
 	</body>
 </html>
