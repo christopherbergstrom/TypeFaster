@@ -14,18 +14,29 @@ var gameOverDiv = document.getElementById("gameOverDiv");
 var start = document.getElementById("start");
 var score = document.getElementById("score");
 var menu = document.getElementById("menu");
-// var buttons = document.getElementById("buttons");
 var currentTime = document.getElementById("currentTime");
-// currentTime.innerHTML = 10;
+
 var time;
 var wordPlay;
+var points;
+var strikes;
+var number = 3;
+var wordComputer;
+var wordUser;
+
+var form;
+var input;
+var submit;
+var gamePoints;
+var gameStrikes;
+var gameOverText;
 
 function init()
 {
   start.addEventListener("click", function()
   {
+    clearInterval(time);
     startGame();
-    start.parentNode.removeChild(start);
   });
 
   score.addEventListener("click", function()
@@ -35,14 +46,7 @@ function init()
 
   menu.addEventListener("click", function()
   {
-    // clearButtons(start, score, menu);
-    // createButtons();
-    // var p = document.getElementById("p");
     var table = document.getElementById("table");
-    // if(p)
-    // {
-    //   p.parentNode.removeChild(p);
-    // }
     if(table)
     {
       table.parentNode.removeChild(table);
@@ -50,59 +54,51 @@ function init()
   });
 }
 
-function clearButtons(start, score, menu)
+function createForm()
 {
-  if(start)
-  {
-    start.parentNode.removeChild(start);
-  }
-  if(score)
-  {
-    score.parentNode.removeChild(score);
-  }
-  if(menu)
-  {
-    menu.parentNode.removeChild(menu);
-  }
-}
-
-var points = 0;
-var strikes = 0;
-
-var number = 5;
-var time;
-
-var wordComputer;
-var wordUser;
-
-var form = document.createElement("form");
-form.setAttribute("name", "form");
-var input = document.createElement("input");
-input.setAttribute("type", "text");
-input.setAttribute("name", "input");
-input.setAttribute("value", "");
-var submit = document.createElement("input");
-submit.setAttribute("type", "submit");
-submit.setAttribute("name", "submit");
-submit.setAttribute("value", "enter");
-input.setAttribute("placeholder", "TYPE HERE!!!");
-var gamePoints = document.createElement("p");
-gamePoints.setAttribute("id", "gamePoints");
-gamePoints.innerHTML = "Points: ";
-var gameStrikes = document.createElement("p");
-gameStrikes.setAttribute("id", "gameStrikes");
-gameStrikes.innerHTML = "Strikes: ";
-
-function startGame()
-{
-  console.log("in start game");
-
+  form = document.createElement("form");
+  form.setAttribute("name", "form");
+  input = document.createElement("input");
+  input.setAttribute("type", "text");
+  input.setAttribute("name", "input");
+  input.setAttribute("value", "");
+  submit = document.createElement("input");
+  submit.setAttribute("type", "submit");
+  submit.setAttribute("name", "submit");
+  submit.setAttribute("value", "enter");
+  input.setAttribute("placeholder", "TYPE HERE!!!");
+  gamePoints = document.createElement("p");
+  gamePoints.setAttribute("id", "gamePoints");
+  gamePoints.innerHTML = "Points: ";
+  gameStrikes = document.createElement("p");
+  gameStrikes.setAttribute("id", "gameStrikes");
+  gameStrikes.innerHTML = "Strikes: ";
+  gameOverText = document.createElement("p");
+  gameOverText.setAttribute("id", "gameOverText");
+  gameOverText.innerHTML = "";
   form.appendChild(input);
   form.appendChild(submit);
   formDiv.appendChild(form);
   extrasDiv.appendChild(gamePoints);
   extrasDiv.appendChild(gameStrikes);
+  gameOverDiv.appendChild(gameOverText);
+  gamePoints.innerHTML = "Points: "+0;
+  gameStrikes.innerHTML = "Strikes: "+0;
+  gameOverText.innerHTML = "";
+  points = 0;
+  strikes = 0;
+}
 
+function startGame()
+{
+  console.log("in start game");
+  createForm();
+  startGame2();
+}
+
+function startGame2()
+{
+  console.log("in start game2!!!");
   if(strikes < 3)
   {
     startTime();
@@ -126,10 +122,12 @@ function gameLogic()
   wordComputer = wordPlay;
   form.submit.addEventListener("click", function(e)
   {
-    wordUser = document.form.input.value;
     e.preventDefault();
+    wordUser = document.form.input.value;
     var equal = wordUser.localeCompare(wordComputer);
-    // console.log(equal);
+    console.log(wordUser);
+    console.log(wordComputer);
+    console.log(equal);
     console.log("time: "+currentTime.innerHTML);
     if(equal === 0 && currentTime.innerHTML > 0)
     {
@@ -137,35 +135,51 @@ function gameLogic()
       gamePoints.innerHTML = "Points: "+points;
       console.log("points: "+points);
       clearInterval(time);
-      startGame();
+      startGame2();
     }
-    else if (equal === 1 || equal === -1)
+    // else if (equal === 1 || equal === -1)
+    // {
+    //   strikes ++;
+    //   gameStrikes.innerHTML = "Strikes: "+strikes;
+    //   console.log("strikes: "+strikes);
+    //   clearInterval(time);
+    //   startGame2();
+    // }
+
+    // else if (equal === 1)
+    // {
+    //   strikes ++;
+    //   gameStrikes.innerHTML = "Strikes: "+strikes;
+    //   console.log("strikes: "+strikes);
+    //   clearInterval(time);
+    //   startGame();
+    // }
+
+    // else if (equal === -1)
+    // {
+    //   strikes ++;
+    //   gameStrikes.innerHTML = "Strikes: "+strikes;
+    //   console.log("strikes: "+strikes);
+    //   clearInterval(time);
+    //   startGame();
+    // }
+
+    else
     {
       strikes ++;
       gameStrikes.innerHTML = "Strikes: "+strikes;
       console.log("strikes: "+strikes);
       clearInterval(time);
-      startGame();
+      startGame2();
     }
-
-    // else
-    // {
-    //   strikes ++;
-    //   gameStrikes.innerHTML = strikes;
-    //   console.log("strikes: "+strikes);
-    //   // stopTime();
-    //   clearInterval(time);
-    //   startGame();
-    // }
   });
 }
 
 function gameOver()
 {
   console.log("in game over");
-  var game = document.createElement("p");
-  gameOverDiv.appendChild(game);
-  game.innerHTML = "GAME OVER";
+  // gameOverText = document.getElementById("gameOver");
+  gameOverText.innerHTML = "GAME OVER";
   gamePoints.innerHTML = "Final Points: "+points;
   gameStrikes.innerHTML = "Strikes: "+strikes;
 }
@@ -186,7 +200,7 @@ function startTime()
       gameStrikes.innerHTML = "Strikes: "+strikes;
       console.log("strikes: "+strikes);
       clearInterval(time);
-      startGame();
+      startGame2();
     }
   }, 1000);
 }
@@ -211,7 +225,6 @@ function word(word)
   var p = document.getElementById("wordPlacement");
   p.innerHTML = word.word;
   wordPlay = word.word;
-  wordPlacementDiv.appendChild(p);
   gameLogic();
 }
 
