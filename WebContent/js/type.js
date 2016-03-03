@@ -9,7 +9,7 @@ var score = document.getElementById("score");
 var menu = document.getElementById("menu");
 // var buttons = document.getElementById("buttons");
 var currentTime = document.getElementById("currentTime");
-currentTime.innerHTML = 5;
+currentTime.innerHTML = 10;
 var time = 0;
 var wordPlay;
 
@@ -63,7 +63,7 @@ var points = 0;
 var strikes = 0;
 var equal;
 
-var number = 6;
+var number = 10;
 var time;
 
 var wordComputer;
@@ -96,12 +96,12 @@ function startGame()
     console.log("strikes: "+strikes);
     getWord(word);
     // gameLogic();
-    strikes++;
+    // strikes++;
   }
-  else
-  {
-    gameOver();
-  }
+  // else
+  // {
+  //   gameOver();
+  // }
 }
 
 function gameLogic()
@@ -126,11 +126,22 @@ function gameLogic()
     {
       points ++;
       console.log("points: "+points);
+      // stopTime();
+      clearInterval(time);
+      startGame();
     }
     else
     {
       strikes ++;
       console.log("strikes: "+strikes);
+      // stopTime();
+      clearInterval(time);
+      startGame();
+    }
+    if(strikes > 3)
+    {
+
+      gameOver();
     }
   });
 }
@@ -149,7 +160,7 @@ function gameOver()
 function startTime()
 {
   console.log("in start time");
-  number --;
+  // number --;
   // amount of time to type word
   // console.log("test1");
   currentTime.innerHTML = number;
