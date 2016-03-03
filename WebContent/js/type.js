@@ -10,6 +10,9 @@ function init()
 
 var body = document.querySelector("body");
 var buttons = document.getElementById("buttons");
+var currentTime = document.getElementById("currentTime");
+currentTime.innerHTML = 0;
+var time = 0;
 
 function createButtons()
 {
@@ -69,14 +72,108 @@ function clearButtons(start, score, menu)
   }
 }
 
+var points = 0;
+var strikes = 0;
+
+var number = 5500;
+var currentTime = number/1000;
+var time;
+var wordComputer;
+var wordUser;
+
+var form = document.createElement("form");
+form.setAttribute("name", "form");
+var input = document.createElement("input");
+input.setAttribute("type", "text");
+input.setAttribute("name", "input");
+input.setAttribute("value", "");
+var submit = document.createElement("input");
+submit.setAttribute("type", "submit");
+submit.setAttribute("name", "submit");
+submit.setAttribute("value", "enter");
+input.setAttribute("placeholder", "TYPE HERE!!!");
+
 function startGame()
 {
-  var strikes = 0;
+  console.log("in start game");
+  number -= 500;
+
+  form.appendChild(input);
+  form.appendChild(submit);
+  body.appendChild(form);
+
+
   do
   {
-    getWord(word);
-    strikes ++;
+    console.log("in do while loop");
+    console.log(strikes);
+    gameLogic();
   } while (strikes < 4);
+
+  gameOver();
+}
+
+
+function gameLogic()
+{
+  console.log("in game logic");
+
+  input.value = "";
+  input.focus();
+
+  startTime();
+  wordComputer = getWord(word);
+
+  form.addEventListener("click", function(e)
+  {
+    e.preventDefault();
+    wordUser = document.form.input.value;
+  });
+
+  if(wordUser === wordComputer && currentTime.innerHTML >= 0)
+  {
+    points ++;
+  }
+  else
+  {
+    strikes ++;
+  }
+}
+
+function gameOver()
+{
+  console.log("in game over");
+  var game = document.createElement("p");
+  var finalPoints = document.createElement("p");
+  game.innerHTML = "GAME OVER";
+  finalPoints.innerHTML = "points: " + points;
+  body.appendChild(game);
+  body.appendChild(finalPoints);
+}
+
+function startTime()
+{
+  console.log("in start time");
+  // amount of time to type word
+  // currentTime.innerHTML = amount.value;
+  currentTime.innerHTML = 5;
+  time = setInterval(function()
+  {
+    currentTime.innerHTML --;
+    if (currentTime.innerHTML <= 0)
+    {
+      var h1 = document.createElement("h1");
+      h1.setAttribute("id", "h1");
+      h1.innerHTML = "TIME OUT";
+      body.appendChild(h1);
+      stopTime();
+    }
+  }, 1000);
+}
+
+function stopTime()
+{
+  window.setTimeout(function(e){clearInterval(time)}, 0);
 }
 
 // var add = document.add;
@@ -154,12 +251,15 @@ var getWord = function(callback)
 
 function word(word)
 {
-  var body = document.querySelector("body");
+  var p = document.getElementById("p");
+  p.parentNode.removeChild(p);
   var p = document.createElement("p");
   p.setAttribute("id", "p");
   // p.value = word.word;
   p.innerHTML = word.word;
-  body.appendChild(p);
+  body.insertBefore(p, document.form);
+  body.insertBefore(ul, document.contact);
+  // body.appendChild(p);
 }
 
 var getScores = function(callback)
