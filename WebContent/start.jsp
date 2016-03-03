@@ -9,7 +9,10 @@
 	</head>
 	<body>
 		<h1>Type Faster</h1>
-		<div id = "buttons"></div>
+		<button id = "start">start</button>
+		<button id = "score">score</button>
+		<button id = "menu">menu</button>
+		<%-- <div id = "buttons"></div> --%>
 		<div id = "currentTime"></div>
 		<p id = "p"></p>
 		<script src = "js/type.js"></script>

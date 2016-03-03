@@ -4,7 +4,10 @@ window.onload = function()
 };
 
 var body = document.querySelector("body");
-var buttons = document.getElementById("buttons");
+var start = document.getElementById("start");
+var score = document.getElementById("score");
+var menu = document.getElementById("menu");
+// var buttons = document.getElementById("buttons");
 var currentTime = document.getElementById("currentTime");
 currentTime.innerHTML = 5;
 var time = 0;
@@ -12,46 +15,27 @@ var wordPlay;
 
 function init()
 {
-  console.log(currentTime.innerHTML);
-  createButtons();
-}
-
-
-function createButtons()
-{
-  var start = document.createElement("button");
-  start.innerHTML = "Start";
-  buttons.appendChild(start);
-  var score = document.createElement("button");
-  score.innerHTML = "View High Scores";
-  buttons.appendChild(score);
-  var menu = document.createElement("button");
-  menu.innerHTML = "Menu";
-  buttons.appendChild(menu);
-
   start.addEventListener("click", function()
   {
-    // clearButtons(start, score);
     startGame();
     start.parentNode.removeChild(start);
   });
 
   score.addEventListener("click", function()
   {
-    // clearButtons(start, score);
     getScores(scores);
   });
 
   menu.addEventListener("click", function()
   {
-    clearButtons(start, score, menu);
-    createButtons();
-    var p = document.getElementById("p");
+    // clearButtons(start, score, menu);
+    // createButtons();
+    // var p = document.getElementById("p");
     var table = document.getElementById("table");
-    if(p)
-    {
-      p.parentNode.removeChild(p);
-    }
+    // if(p)
+    // {
+    //   p.parentNode.removeChild(p);
+    // }
     if(table)
     {
       table.parentNode.removeChild(table);
@@ -77,6 +61,7 @@ function clearButtons(start, score, menu)
 
 var points = 0;
 var strikes = 0;
+var equal;
 
 var number = 6;
 var time;
@@ -100,25 +85,24 @@ function startGame()
 {
   console.log("in start game");
 
-
   form.appendChild(input);
   form.appendChild(submit);
   body.appendChild(form);
 
-
-  if( strikes < 4)
+  if(strikes < 4)
   {
     startTime();
-    console.log("in do while loop");
+    console.log("in if statement");
     console.log("strikes: "+strikes);
-    // getWord(word);
+    getWord(word);
     // gameLogic();
     strikes++;
   }
-
-  gameOver();
+  else
+  {
+    gameOver();
+  }
 }
-
 
 function gameLogic()
 {
@@ -131,20 +115,24 @@ function gameLogic()
   // console.log("wordPlay: "+wordPlay);
   form.submit.addEventListener("click", function(e)
   {
-    e.preventDefault();
     wordUser = document.form.input.value;
+    e.preventDefault();
     // var n = str1.localeCompare(str2);
-    var equal = wordUser.localeCompare(wordComputer);
+    equal = wordUser.localeCompare(wordComputer);
     console.log(equal);
+    // console.log(equal);
+    console.log("time: "+currentTime.innerHTML);
+    if(equal === 0 && currentTime.innerHTML > 0)
+    {
+      points ++;
+      console.log("points: "+points);
+    }
+    else
+    {
+      strikes ++;
+      console.log("strikes: "+strikes);
+    }
   });
-  if(equal === 0 && currentTime.innerHTML >= 0)
-  {
-    points ++;
-  }
-  else
-  {
-    strikes ++;
-  }
 }
 
 function gameOver()
@@ -166,11 +154,11 @@ function startTime()
   // console.log("test1");
   currentTime.innerHTML = number;
   // console.log("test2");
+  // getWord(word);
   time = setInterval(function()
   {
     console.log("in set interval");
     // console.log(currentTime.innerHTML);
-    getWord(word);
     currentTime.innerHTML --;
     if (currentTime.innerHTML <= 0)
     {
@@ -183,6 +171,111 @@ function stopTime()
 {
   console.log("in stop time");
   window.setTimeout(function(e){clearInterval(time)}, 0);
+}
+
+var getWord = function(callback)
+{
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "rest/getWord");
+  xhr.onreadystatechange = function()
+  {
+    if (xhr.readyState == 4 && xhr.status < 400)
+    {
+      var word = JSON.parse(xhr.responseText);
+      callback(word);
+    }
+  };
+  xhr.send(null);
+};
+
+function word(word)
+{
+  var p = document.getElementById("p");
+  p.parentNode.removeChild(p);
+  var p = document.createElement("p");
+  p.setAttribute("id", "p");
+  p.value = word.word;
+  p.innerHTML = word.word;
+  wordPlay = word.word;
+  // console.log("wordPlay: " + wordPlay);
+  body.insertBefore(p, document.form);
+  gameLogic();
+}
+
+var getScores = function(callback)
+{
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "rest/getScores");
+  // console.log(xhr.status);
+  // console.log(xhr.getAllResponseHeaders());
+  xhr.onreadystatechange = function()
+  {
+    // console.log(xhr.status);
+    // console.log(xhr.getAllResponseHeaders());
+    if (xhr.readyState == 4 && xhr.status < 400)
+    {
+      var scores = JSON.parse(xhr.responseText);
+      callback(scores);
+    }
+  };
+  xhr.send(null);
+};
+
+function scores(scores)
+{
+  var body = document.querySelector("body");
+  var table = document.createElement("table");
+  table.setAttribute("id", "table");
+
+  for (var i = 0; i < scores.length; i++)
+  {
+    var tr = document.createElement("tr");
+    var key = scores[i]
+    for (var k in key)
+    {
+      var th = document.createElement("th");
+      th.setAttribute("id", "th");
+      // th.value = k;
+      th.innerHTML = k;
+      tr.appendChild(th);
+      table.appendChild(tr);
+    }
+    var tr = document.createElement("tr");
+    var obj = scores[i]
+    for (var p in obj)
+    {
+      var td = document.createElement("td");
+      td.setAttribute("id", "td");
+      // td.value = obj[p];
+      td.innerHTML = obj[p];
+      // console.log(obj[p]);
+      tr.appendChild(td);
+      table.appendChild(tr);
+    }
+  }
+  body.appendChild(table);
+}
+
+function updateData(method, url, object, callback)
+{
+    var xhr = new XMLHttpRequest();
+    xhr.open(method,url);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange=function ()
+    {
+        // console.log(xhr.status);
+        // console.log(xhr.readyState);
+        // console.log(xhr.responseText);
+        // console.log(xhr.getAllResponseHeaders());
+    }
+    if (object)
+    {
+        xhr.send(JSON.stringify(object));
+    }
+    else
+    {
+        xhr.send(null);
+    }
 }
 
 // var add = document.add;
@@ -228,111 +321,3 @@ function stopTime()
 //     }
 //     // popSelect();
 // }
-
-
-var getWord = function(callback)
-{
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", "rest/getWord");
-  xhr.onreadystatechange = function()
-  {
-    if (xhr.readyState == 4 && xhr.status < 400)
-    {
-      var word = JSON.parse(xhr.responseText);
-      callback(word);
-    }
-  };
-  xhr.send(null);
-};
-
-function word(word)
-{
-  var p = document.getElementById("p");
-  p.parentNode.removeChild(p);
-  var p = document.createElement("p");
-  p.setAttribute("id", "p");
-  p.value = word.word;
-  p.innerHTML = word.word;
-  wordPlay = word.word;
-  console.log("wordPlay: " + wordPlay);
-  body.insertBefore(p, document.form);
-  gameLogic();
-}
-
-var getScores = function(callback)
-{
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", "rest/getScores");
-  console.log(xhr.status);
-  console.log(xhr.getAllResponseHeaders());
-  xhr.onreadystatechange = function()
-  {
-    console.log(xhr.status);
-    console.log(xhr.getAllResponseHeaders());
-    if (xhr.readyState == 4 && xhr.status < 400)
-    {
-      var scores = JSON.parse(xhr.responseText);
-      callback(scores);
-    }
-  };
-  xhr.send(null);
-};
-
-function scores(scores)
-{
-  var body = document.querySelector("body");
-  var table = document.createElement("table");
-  table.setAttribute("id", "table");
-
-  for (var i = 0; i < scores.length; i++)
-  {
-    var tr = document.createElement("tr");
-    var key = scores[i]
-    for (var k in key)
-    {
-      var th = document.createElement("th");
-      th.setAttribute("id", "th");
-      // th.value = k;
-      th.innerHTML = k;
-      tr.appendChild(th);
-      table.appendChild(tr);
-    }
-    var tr = document.createElement("tr");
-    var obj = scores[i]
-    for (var p in obj)
-    {
-      var td = document.createElement("td");
-      td.setAttribute("id", "td");
-      // td.value = obj[p];
-      td.innerHTML = obj[p];
-      // console.log(obj[p]);
-      tr.appendChild(td);
-      table.appendChild(tr);
-    }
-  }
-  body.appendChild(table);
-}
-
-
-
-function updateData(method, url, object, callback)
-{
-    var xhr = new XMLHttpRequest();
-    xhr.open(method,url);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange=function ()
-    {
-        // console.log(xhr.status);
-        // console.log(xhr.readyState);
-        // console.log(xhr.responseText);
-        // console.log(xhr.getAllResponseHeaders());
-    }
-    if (object)
-    {
-        xhr.send(JSON.stringify(object));
-    }
-    else
-    {
-        xhr.send(null);
-    }
-}
