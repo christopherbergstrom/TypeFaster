@@ -80,6 +80,10 @@ submit.setAttribute("type", "submit");
 submit.setAttribute("name", "submit");
 submit.setAttribute("value", "enter");
 input.setAttribute("placeholder", "TYPE HERE!!!");
+var gamePoints = document.createElement("p");
+gamePoints.setAttribute("id", "gamePoints");
+var gameStrikes = document.createElement("p");
+gameStrikes.setAttribute("id", "gameStrikes");
 
 function startGame()
 {
@@ -126,18 +130,28 @@ function gameLogic()
     {
       points ++;
       console.log("points: "+points);
+      gamePoints.innerHTML = points;
       // stopTime();
       clearInterval(time);
       startGame();
     }
-    else
+    else if (currentTime.innerHTML <= 0)
     {
       strikes ++;
+      gameStrikes.innerHTML = strikes;
       console.log("strikes: "+strikes);
-      // stopTime();
       clearInterval(time);
       startGame();
     }
+    // else
+    // {
+    //   strikes ++;
+    //   gameStrikes.innerHTML = strikes;
+    //   console.log("strikes: "+strikes);
+    //   // stopTime();
+    //   clearInterval(time);
+    //   startGame();
+    // }
     if(strikes > 3)
     {
 
@@ -173,7 +187,12 @@ function startTime()
     currentTime.innerHTML --;
     if (currentTime.innerHTML <= 0)
     {
-      stopTime();
+      strikes ++;
+      gameStrikes.innerHTML = strikes;
+      console.log("strikes: "+strikes);
+      clearInterval(time);
+      startGame();
+      // stopTime();
     }
   }, 1000);
 }
