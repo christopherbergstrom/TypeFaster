@@ -24,6 +24,8 @@
 
 		<div id = "formDiv"></div>
 
+		<div id = "gameOverDiv"></div>
+
 		<div id = "extrasDiv"></div>
 
 		<script src = "js/type.js"></script>
