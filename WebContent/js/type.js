@@ -106,14 +106,15 @@ function startGame()
   body.appendChild(form);
 
 
-  do
+  if( strikes < 4)
   {
+    startTime();
     console.log("in do while loop");
     console.log("strikes: "+strikes);
-    getWord(word);
+    // getWord(word);
     // gameLogic();
     strikes++;
-  } while (strikes < 4);
+  }
 
   gameOver();
 }
@@ -128,13 +129,13 @@ function gameLogic()
   wordComputer = wordPlay;
   // console.log("wordComputer: "+wordComputer);
   // console.log("wordPlay: "+wordPlay);
-  startTime();
-  form.addEventListener("click", function(e)
+  form.submit.addEventListener("click", function(e)
   {
     e.preventDefault();
     wordUser = document.form.input.value;
+    // var n = str1.localeCompare(str2);
     var equal = wordUser.localeCompare(wordComputer);
-    // console.log(equal);
+    console.log(equal);
   });
   if(equal === 0 && currentTime.innerHTML >= 0)
   {
@@ -169,6 +170,7 @@ function startTime()
   {
     console.log("in set interval");
     // console.log(currentTime.innerHTML);
+    getWord(word);
     currentTime.innerHTML --;
     if (currentTime.innerHTML <= 0)
     {
