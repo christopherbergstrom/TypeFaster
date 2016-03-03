@@ -10,10 +10,10 @@
 	<body>
 		<h1>Type Faster</h1>
 
-		<div id = "buttons">
-		<button id = "start">start</button>
+		<div id = "buttonsDiv">
+		<%-- <button id = "start">start</button>
 		<button id = "score">score</button>
-		<button id = "menu">menu</button>
+		<button id = "menu">menu</button> --%>
 		</div>
 
 		<div id = "currentTime"></div>

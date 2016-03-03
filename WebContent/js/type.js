@@ -5,15 +5,16 @@ window.onload = function()
 
 var body = document.querySelector("body");
 
+var buttonsDiv = document.getElementById("buttonsDiv");
 var timeDiv = document.getElementById("timeDiv");
 var wordPlacementDiv = document.getElementById("wordPlacementDiv");
 var formDiv = document.getElementById("formDiv");
 var extrasDiv = document.getElementById("extrasDiv");
 var gameOverDiv = document.getElementById("gameOverDiv");
 
-var start = document.getElementById("start");
-var score = document.getElementById("score");
-var menu = document.getElementById("menu");
+// var start = document.getElementById("start");
+// var score = document.getElementById("score");
+// var menu = document.getElementById("menu");
 var currentTime = document.getElementById("currentTime");
 
 var time;
@@ -24,6 +25,10 @@ var number = 3;
 var wordComputer;
 var wordUser;
 
+var start;
+var score;
+var menu;
+// var table;
 var form;
 var input;
 var submit;
@@ -31,11 +36,15 @@ var gamePoints;
 var gameStrikes;
 var gameOverText;
 
+var created = false;
+
 function init()
 {
+  createButtons();
   start.addEventListener("click", function()
   {
     clearInterval(time);
+    clearButtons();
     startGame();
   });
 
@@ -52,6 +61,31 @@ function init()
       table.parentNode.removeChild(table);
     }
   });
+}
+
+function createButtons()
+{
+  start = document.createElement("button");
+  start.innerHTML = "start"
+  buttonsDiv.appendChild(start);
+  score = document.createElement("button");
+  score.innerHTML = "score"
+  buttonsDiv.appendChild(score);
+  menu = document.createElement("button");
+  menu.innerHTML = "menu"
+  buttonsDiv.appendChild(menu);
+}
+
+function clearButtons()
+{
+  var table = document.getElementById("table");
+  if(table)
+  {
+    table.parentNode.removeChild(table);
+  }
+  start.parentNode.removeChild(start);
+  score.parentNode.removeChild(score);
+  menu.parentNode.removeChild(menu);
 }
 
 function createForm()
@@ -92,8 +126,22 @@ function createForm()
 function startGame()
 {
   console.log("in start game");
-  createForm();
-  startGame2();
+  if(created)
+  {
+    startGame2();
+  }
+  else
+  {
+    createForm();
+    startGame2();
+    created = true;
+  }
+  // if (form)
+  // {
+  //   form.parentNode.removeChild(form);
+  //   gamePoints.parentNode.removeChild(gamePoints);
+  //   gameStrikes.parentNode.removeChild(gameStrikes);
+  // }
 }
 
 function startGame2()
@@ -108,8 +156,10 @@ function startGame2()
   }
   else
   {
-    form.parentNode.removeChild(form);
     gameOver();
+    form.parentNode.removeChild(form);
+    gamePoints.parentNode.removeChild(gamePoints);
+    gameStrikes.parentNode.removeChild(gameStrikes);
   }
 }
 
@@ -134,8 +184,8 @@ function gameLogic()
       points ++;
       gamePoints.innerHTML = "Points: "+points;
       console.log("points: "+points);
-      clearInterval(time);
-      startGame2();
+      // clearInterval(time);
+      // startGame2();
     }
     // else if (equal === 1 || equal === -1)
     // {
@@ -169,8 +219,8 @@ function gameLogic()
       strikes ++;
       gameStrikes.innerHTML = "Strikes: "+strikes;
       console.log("strikes: "+strikes);
-      clearInterval(time);
-      startGame2();
+      // clearInterval(time);
+      // startGame2();
     }
   });
 }
