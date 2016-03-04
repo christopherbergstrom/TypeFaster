@@ -89,6 +89,7 @@ function createForm()
 {
   form = document.createElement("form");
   form.setAttribute("name", "form");
+  form.setAttribute("id", "formy");
   input = document.createElement("input");
   input.setAttribute("type", "text");
   input.setAttribute("name", "input");
@@ -142,11 +143,14 @@ function startGame()
   //   gameStrikes.parentNode.removeChild(gameStrikes);
   // }
 }
-
+var x;
 function startGame2()
 {
   console.log("in start game2!!!");
   createForm();
+  x = 1;
+  x++;
+  console.log("x: "+x);
   if(strikes < 3)
   {
     startTime();
@@ -166,18 +170,20 @@ function startGame2()
 function gameLogic()
 {
   console.log("in game logic");
-  input.focus();
   input.value = "";
-  console.log(input.value);
+  input.focus();
+  document.getElementById("formy").reset();
+  // form.reset();
+  console.log("text field: "+input.value);
   wordComputer = wordPlay;
   form.submit.addEventListener("click", function(e)
   {
     e.preventDefault();
     wordUser = document.form.input.value;
     var equal = wordUser.localeCompare(wordComputer);
-    console.log(wordUser);
-    console.log(wordComputer);
-    console.log(equal);
+    console.log("user word: "+wordUser);
+    console.log("computer word: "+wordComputer);
+    console.log("equal: "+equal);
     console.log("time: "+currentTime.innerHTML);
     if(equal === 0)
     {
