@@ -147,8 +147,6 @@ function startGame2()
 {
   console.log("in start game2!!!");
   createForm();
-  input.value = "";
-  input.focus();
   if(strikes < 3)
   {
     startTime();
@@ -168,7 +166,9 @@ function startGame2()
 function gameLogic()
 {
   console.log("in game logic");
-
+  input.focus();
+  input.value = "";
+  console.log(input.value);
   wordComputer = wordPlay;
   form.submit.addEventListener("click", function(e)
   {
