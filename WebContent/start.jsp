@@ -8,13 +8,9 @@
 		<title>Type Faster</title>
 	</head>
 	<body>
-		<h1>Type Faster</h1>
+		<h1 id = "banner">Type Faster</h1>
 
-		<div id = "buttonsDiv">
-		<%-- <button id = "start">start</button>
-		<button id = "score">score</button>
-		<button id = "menu">menu</button> --%>
-		</div>
+		<div id = "buttonsDiv"></div>
 
 		<div id = "currentTime"></div>
 

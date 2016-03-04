@@ -6,19 +6,18 @@ window.onload = function()
 var body = document.querySelector("body");
 
 var buttonsDiv = document.getElementById("buttonsDiv");
-var timeDiv = document.getElementById("timeDiv");
+var currentTime = document.getElementById("currentTime");
 var wordPlacementDiv = document.getElementById("wordPlacementDiv");
 var formDiv = document.getElementById("formDiv");
 var extrasDiv = document.getElementById("extrasDiv");
 var gameOverDiv = document.getElementById("gameOverDiv");
 var enterScoreDiv = document.getElementById("enterScoreDiv");
-var currentTime = document.getElementById("currentTime");
 
 var time;
 var wordPlay;
 var points;
 var strikes;
-var number = 5000;
+var number = 10100;
 var wordComputer;
 var wordUser;
 var table;
@@ -33,6 +32,7 @@ var gameStrikes;
 var gameOverText;
 var enter;
 var again;
+var instructions;
 
 var created = false;
 
@@ -52,6 +52,11 @@ function init()
     {
       table.parentNode.removeChild(table);
     }
+    instructions = document.getElementById("instructions");
+    if(instructions)
+    {
+      instructions.parentNode.removeChild(instructions);
+    }
     getScores(scores);
   });
   menu.addEventListener("click", function()
@@ -61,19 +66,37 @@ function init()
     {
       table.parentNode.removeChild(table);
     }
+    instructions = document.getElementById("instructions");
+    if(instructions)
+    {
+      instructions.parentNode.removeChild(instructions);
+    }
+    var instructions = document.createElement("p");
+    instructions.setAttribute("id", "instructions");
+    instructions.innerHTML = "Type the word on the screen and hit enter. The faster you type, the more points you get. You get a strike if you miss type a word or if the time runs out. Get three strikes and you lose.";
+    body.appendChild(instructions);
   });
+}
+
+removeForm = document.getElementById("formy");
+if(removeForm)
+{
+  removeForm.parentNode.removeChild(removeForm);
 }
 
 function createButtons()
 {
   start = document.createElement("button");
-  start.innerHTML = "start"
+  start.setAttribute("class", "buttons");
+  start.innerHTML = "start";
   buttonsDiv.appendChild(start);
   score = document.createElement("button");
-  score.innerHTML = "score"
+  score.setAttribute("class", "buttons");
+  score.innerHTML = "score";
   buttonsDiv.appendChild(score);
   menu = document.createElement("button");
-  menu.innerHTML = "menu"
+  menu.setAttribute("class", "buttons");
+  menu.innerHTML = "instructions";
   buttonsDiv.appendChild(menu);
 }
 
@@ -83,6 +106,11 @@ function clearButtons()
   if(table)
   {
     table.parentNode.removeChild(table);
+  }
+  instructions = document.getElementById("instructions");
+  if(instructions)
+  {
+    instructions.parentNode.removeChild(instructions);
   }
   start.parentNode.removeChild(start);
   score.parentNode.removeChild(score);
@@ -102,6 +130,7 @@ function createForm()
   submit.setAttribute("type", "submit");
   submit.setAttribute("name", "submit");
   submit.setAttribute("value", "enter");
+  submit.setAttribute("class", "buttons");
   input.setAttribute("placeholder", "TYPE HERE!!!");
   form.appendChild(input);
   form.appendChild(submit);
@@ -170,20 +199,18 @@ function gameLogic()
     console.log("time: "+currentTime.innerHTML);
     if(equal === 0)
     {
-      points ++;
+      var intPoint = parseInt(currentTime.innerHTML);
+      points += intPoint;
       gamePoints.innerHTML = "Points: "+points;
       console.log("points: "+points);
       clearInterval(time);
       startGame2();
-      if(form)
+      removeForm = document.getElementById("formy");
+      if(removeForm)
       {
-        console.log("form")
+        removeForm.parentNode.removeChild(removeForm);
       }
-      form.parentNode.removeChild(form);
-      if(form)
-      {
-        console.log("form")
-      }
+      // form.parentNode.removeChild(form);
     }
     else if (equal === 1 || equal === -1)
     {
@@ -192,9 +219,10 @@ function gameLogic()
       console.log("strikes: "+strikes);
       clearInterval(time);
       startGame2();
-      if(form)
+      removeForm = document.getElementById("formy");
+      if(removeForm)
       {
-        form.parentNode.removeChild(form);
+        removeForm.parentNode.removeChild(removeForm);
       }
     }
   });
@@ -203,11 +231,13 @@ function gameLogic()
 function gameOver()
 {
   console.log("in game over");
+  form.parentNode.removeChild(form);
   gameOverText.innerHTML = "GAME OVER";
   gamePoints.innerHTML = "Final Points: "+points;
   gameStrikes.innerHTML = "Strikes: "+strikes;
   popLetters();
   enter = document.createElement("button");
+  enter.setAttribute("class", "buttons");
   enter.innerHTML = "Enter Score";
   enterScoreDiv.appendChild(enter);
   enter.addEventListener("click", function()
@@ -219,8 +249,11 @@ function gameOver()
 
     var obj = {initials:letters, score:points};
     updateData("PUT", "rest/score", obj);
+    enter.parentNode.removeChild(enter);
+    window.setTimeout(function(e){getScores(scores)}, 100);
   });
   again = document.createElement("button");
+  again.setAttribute("class", "buttons");
   again.innerHTML = "Play Again?";
   enterScoreDiv.appendChild(again);
   again.addEventListener("click", function()
@@ -295,12 +328,32 @@ var characters = [
 function startTime()
 {
   console.log("in start time");
-  // number --;
+  number -=100;
   currentTime.innerHTML = number;
   time = setInterval(function()
   {
     console.log("in set interval");
     currentTime.innerHTML -=1;
+    if (currentTime.innerHTML <= 10100)
+      currentTime.setAttribute("id","ten");
+    if (currentTime.innerHTML <= 9000)
+      currentTime.setAttribute("id","nine");
+    if (currentTime.innerHTML <= 8000)
+      currentTime.setAttribute("id","eight");
+    if (currentTime.innerHTML <= 7000)
+      currentTime.setAttribute("id","seven");
+    if (currentTime.innerHTML <= 6000)
+      currentTime.setAttribute("id","six");
+    if (currentTime.innerHTML <= 5000)
+      currentTime.setAttribute("id","five");
+    if (currentTime.innerHTML <= 4000)
+      currentTime.setAttribute("id","four");
+    if (currentTime.innerHTML <= 3000)
+      currentTime.setAttribute("id","three");
+    if (currentTime.innerHTML <= 2000)
+      currentTime.setAttribute("id","two");
+    if (currentTime.innerHTML <= 1000)
+      currentTime.setAttribute("id","one");
     if (currentTime.innerHTML <= 0)
     {
       strikes ++;
@@ -308,7 +361,11 @@ function startTime()
       console.log("strikes: "+strikes);
       clearInterval(time);
       startGame2();
-      form.parentNode.removeChild(form);
+      removeForm = document.getElementById("formy");
+      if(removeForm)
+      {
+        removeForm.parentNode.removeChild(removeForm);
+      }
     }
   }, 1);
 }
