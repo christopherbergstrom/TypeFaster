@@ -21,14 +21,13 @@ var time;
 var wordPlay;
 var points;
 var strikes;
-var number = 3;
+var number = 7;
 var wordComputer;
 var wordUser;
-
+var table;
 var start;
 var score;
 var menu;
-// var table;
 var form;
 var input;
 var submit;
@@ -47,15 +46,13 @@ function init()
     clearButtons();
     startGame();
   });
-
   score.addEventListener("click", function()
   {
     getScores(scores);
   });
-
   menu.addEventListener("click", function()
   {
-    var table = document.getElementById("table");
+    table = document.getElementById("table");
     if(table)
     {
       table.parentNode.removeChild(table);
@@ -78,7 +75,7 @@ function createButtons()
 
 function clearButtons()
 {
-  var table = document.getElementById("table");
+  table = document.getElementById("table");
   if(table)
   {
     table.parentNode.removeChild(table);
@@ -101,18 +98,23 @@ function createForm()
   submit.setAttribute("name", "submit");
   submit.setAttribute("value", "enter");
   input.setAttribute("placeholder", "TYPE HERE!!!");
-  gamePoints = document.createElement("p");
-  gamePoints.setAttribute("id", "gamePoints");
-  gamePoints.innerHTML = "Points: ";
-  gameStrikes = document.createElement("p");
-  gameStrikes.setAttribute("id", "gameStrikes");
-  gameStrikes.innerHTML = "Strikes: ";
-  gameOverText = document.createElement("p");
-  gameOverText.setAttribute("id", "gameOverText");
-  gameOverText.innerHTML = "";
   form.appendChild(input);
   form.appendChild(submit);
   formDiv.appendChild(form);
+}
+gamePoints = document.createElement("p");
+gamePoints.setAttribute("id", "gamePoints");
+gamePoints.innerHTML = "Points: ";
+gameStrikes = document.createElement("p");
+gameStrikes.setAttribute("id", "gameStrikes");
+gameStrikes.innerHTML = "Strikes: ";
+gameOverText = document.createElement("p");
+gameOverText.setAttribute("id", "gameOverText");
+gameOverText.innerHTML = "";
+
+function startGame()
+{
+  console.log("in start game");
   extrasDiv.appendChild(gamePoints);
   extrasDiv.appendChild(gameStrikes);
   gameOverDiv.appendChild(gameOverText);
@@ -121,21 +123,18 @@ function createForm()
   gameOverText.innerHTML = "";
   points = 0;
   strikes = 0;
-}
-
-function startGame()
-{
-  console.log("in start game");
-  if(created)
-  {
-    startGame2();
-  }
-  else
-  {
-    createForm();
-    startGame2();
-    created = true;
-  }
+  // createForm();
+  startGame2();
+  // if(created)
+  // {
+  //   startGame2();
+  // }
+  // else
+  // {
+  //   createForm();
+  //   startGame2();
+  //   created = true;
+  // }
   // if (form)
   // {
   //   form.parentNode.removeChild(form);
@@ -147,6 +146,9 @@ function startGame()
 function startGame2()
 {
   console.log("in start game2!!!");
+  createForm();
+  input.value = "";
+  input.focus();
   if(strikes < 3)
   {
     startTime();
@@ -157,9 +159,9 @@ function startGame2()
   else
   {
     gameOver();
-    form.parentNode.removeChild(form);
-    gamePoints.parentNode.removeChild(gamePoints);
-    gameStrikes.parentNode.removeChild(gameStrikes);
+    // form.parentNode.removeChild(form);
+    // gamePoints.parentNode.removeChild(gamePoints);
+    // gameStrikes.parentNode.removeChild(gameStrikes);
   }
 }
 
@@ -167,8 +169,6 @@ function gameLogic()
 {
   console.log("in game logic");
 
-  input.value = "";
-  input.focus();
   wordComputer = wordPlay;
   form.submit.addEventListener("click", function(e)
   {
@@ -179,48 +179,34 @@ function gameLogic()
     console.log(wordComputer);
     console.log(equal);
     console.log("time: "+currentTime.innerHTML);
-    if(equal === 0 && currentTime.innerHTML > 0)
+    if(equal === 0)
     {
       points ++;
       gamePoints.innerHTML = "Points: "+points;
       console.log("points: "+points);
-      // clearInterval(time);
-      // startGame2();
+      clearInterval(time);
+      startGame2();
+      if(form)
+      {
+        console.log("form")
+      }
+      form.parentNode.removeChild(form);
+      if(form)
+      {
+        console.log("form")
+      }
     }
-    // else if (equal === 1 || equal === -1)
-    // {
-    //   strikes ++;
-    //   gameStrikes.innerHTML = "Strikes: "+strikes;
-    //   console.log("strikes: "+strikes);
-    //   clearInterval(time);
-    //   startGame2();
-    // }
-
-    // else if (equal === 1)
-    // {
-    //   strikes ++;
-    //   gameStrikes.innerHTML = "Strikes: "+strikes;
-    //   console.log("strikes: "+strikes);
-    //   clearInterval(time);
-    //   startGame();
-    // }
-
-    // else if (equal === -1)
-    // {
-    //   strikes ++;
-    //   gameStrikes.innerHTML = "Strikes: "+strikes;
-    //   console.log("strikes: "+strikes);
-    //   clearInterval(time);
-    //   startGame();
-    // }
-
-    else
+    else if (equal === 1 || equal === -1)
     {
       strikes ++;
       gameStrikes.innerHTML = "Strikes: "+strikes;
       console.log("strikes: "+strikes);
-      // clearInterval(time);
-      // startGame2();
+      clearInterval(time);
+      startGame2();
+      if(form)
+      {
+        form.parentNode.removeChild(form);
+      }
     }
   });
 }
@@ -251,6 +237,8 @@ function startTime()
       console.log("strikes: "+strikes);
       clearInterval(time);
       startGame2();
+
+      form.parentNode.removeChild(form);
     }
   }, 1000);
 }
