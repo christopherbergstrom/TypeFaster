@@ -12,10 +12,6 @@ var formDiv = document.getElementById("formDiv");
 var extrasDiv = document.getElementById("extrasDiv");
 var gameOverDiv = document.getElementById("gameOverDiv");
 var enterScoreDiv = document.getElementById("enterScoreDiv");
-
-// var start = document.getElementById("start");
-// var score = document.getElementById("score");
-// var menu = document.getElementById("menu");
 var currentTime = document.getElementById("currentTime");
 
 var time;
@@ -132,24 +128,7 @@ function startGame()
   gameOverText.innerHTML = "";
   points = 0;
   strikes = 0;
-  // createForm();
   startGame2();
-  // if(created)
-  // {
-  //   startGame2();
-  // }
-  // else
-  // {
-  //   createForm();
-  //   startGame2();
-  //   created = true;
-  // }
-  // if (form)
-  // {
-  //   form.parentNode.removeChild(form);
-  //   gamePoints.parentNode.removeChild(gamePoints);
-  //   gameStrikes.parentNode.removeChild(gameStrikes);
-  // }
 }
 var x;
 function startGame2()
@@ -169,9 +148,6 @@ function startGame2()
   else
   {
     gameOver();
-    // form.parentNode.removeChild(form);
-    // gamePoints.parentNode.removeChild(gamePoints);
-    // gameStrikes.parentNode.removeChild(gameStrikes);
   }
 }
 
@@ -181,7 +157,6 @@ function gameLogic()
   input.value = "";
   input.focus();
   document.getElementById("formy").reset();
-  // form.reset();
   console.log("text field: "+input.value);
   wordComputer = wordPlay;
   form.submit.addEventListener("click", function(e)
@@ -228,7 +203,6 @@ function gameLogic()
 function gameOver()
 {
   console.log("in game over");
-  // gameOverText = document.getElementById("gameOver");
   gameOverText.innerHTML = "GAME OVER";
   gamePoints.innerHTML = "Final Points: "+points;
   gameStrikes.innerHTML = "Strikes: "+strikes;
@@ -238,9 +212,6 @@ function gameOver()
   enterScoreDiv.appendChild(enter);
   enter.addEventListener("click", function()
   {
-    // var fi = document.enterScoreDiv.select0.value;
-    // var mi = document.enterScoreDiv.select1.value;
-    // var li = document.enterScoreDiv.select2.value;
     var fi = document.getElementById("select0");
     var mi = document.getElementById("select1");
     var li = document.getElementById("select2");
@@ -268,7 +239,6 @@ function popLetters()
     for (var j = 0; j < characters.length; j++)
     {
       var option = document.createElement("option");
-      // option.value = characters[j].character;
       option.innerHTML = characters[j].character;
       select.appendChild(option);
     }
@@ -330,7 +300,6 @@ function startTime()
   time = setInterval(function()
   {
     console.log("in set interval");
-    // console.log(currentTime.innerHTML);
     currentTime.innerHTML -=1;
     if (currentTime.innerHTML <= 0)
     {
