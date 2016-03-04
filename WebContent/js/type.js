@@ -247,8 +247,7 @@ function gameOver()
     var letters = fi.value+mi.value+li.value;
 
     var obj = {initials:letters, score:points};
-    // console.log("PUT", "http://localhost:8080/MPGTracker/rest/mpg", obj);
-    updateData("PUT", "http://localhost:8080/TypeFaster/rest/score", obj);
+    updateData("PUT", "rest/score", obj);
   });
   again = document.createElement("button");
   again.innerHTML = "Play Again?";
@@ -392,32 +391,25 @@ function scores(scores)
   var body = document.querySelector("body");
   var table = document.createElement("table");
   table.setAttribute("id", "table");
+  var tr = document.createElement("tr");
+  var th = document.createElement("th");
+  th.innerHTML = "Initials";
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.innerHTML = "Score";
+  tr.appendChild(th);
+  table.appendChild(tr);
 
   for (var i = 0; i < scores.length; i++)
   {
     var tr = document.createElement("tr");
-    var key = scores[i]
-    for (var k in key)
-    {
-      var th = document.createElement("th");
-      th.setAttribute("id", "th");
-      // th.value = k;
-      th.innerHTML = k;
-      tr.appendChild(th);
-      table.appendChild(tr);
-    }
-    var tr = document.createElement("tr");
-    var obj = scores[i]
-    for (var p in obj)
-    {
-      var td = document.createElement("td");
-      td.setAttribute("id", "td");
-      // td.value = obj[p];
-      td.innerHTML = obj[p];
-      // console.log(obj[p]);
-      tr.appendChild(td);
-      table.appendChild(tr);
-    }
+    var td = document.createElement("td");
+    td.innerHTML = scores[i].initials;
+    tr.appendChild(td);
+    var td = document.createElement("td");
+    td.innerHTML = scores[i].score;
+    tr.appendChild(td);
+    table.appendChild(tr);
   }
   body.appendChild(table);
 }
@@ -443,23 +435,3 @@ function updateData(method, url, object, callback)
         xhr.send(null);
     }
 }
-
-// var add = document.add;
-// add.submit.addEventListener("click", function (e)
-// {
-//   e.preventDefault();
-//   var desc = document.add.desc.value;
-//   var miles = document.add.miles.value;
-//   var gallons = document.add.gallons.value;
-//   var gas = document.add.gas.value;
-//   // console.log(desc);
-//   // console.log(miles);
-//   // console.log(gallons);
-//   // console.log(gas);
-//   var obj = {"tripDescription":desc, "milesDriven":miles, "gallonsPurchased":gallons, "priceOfGas":gas};
-//   // console.log("PUT", "http://localhost:8080/TypeFaster/rest/score", obj);
-//   // popSelect();
-//   updateData("PUT", "http://localhost:8080/TypeFaster/rest/score", obj);
-// });
-// // clearTable();
-// }
