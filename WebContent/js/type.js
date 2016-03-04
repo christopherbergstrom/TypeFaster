@@ -88,15 +88,15 @@ function createButtons()
 {
   start = document.createElement("button");
   start.setAttribute("class", "buttons");
-  start.innerHTML = "start";
+  start.innerHTML = "Play";
   buttonsDiv.appendChild(start);
   score = document.createElement("button");
   score.setAttribute("class", "buttons");
-  score.innerHTML = "score";
+  score.innerHTML = "High Scores";
   buttonsDiv.appendChild(score);
   menu = document.createElement("button");
   menu.setAttribute("class", "buttons");
-  menu.innerHTML = "instructions";
+  menu.innerHTML = "Instructions";
   buttonsDiv.appendChild(menu);
 }
 
@@ -129,7 +129,7 @@ function createForm()
   submit = document.createElement("input");
   submit.setAttribute("type", "submit");
   submit.setAttribute("name", "submit");
-  submit.setAttribute("value", "enter");
+  submit.setAttribute("value", "Enter");
   submit.setAttribute("class", "buttons");
   input.setAttribute("placeholder", "TYPE HERE!!!");
   form.appendChild(input);
@@ -334,6 +334,7 @@ function startTime()
   {
     console.log("in set interval");
     currentTime.innerHTML -=1;
+    currentTime.setAttribute("class", "currentTime");
     if (currentTime.innerHTML <= 10100)
       currentTime.setAttribute("id","ten");
     if (currentTime.innerHTML <= 9000)

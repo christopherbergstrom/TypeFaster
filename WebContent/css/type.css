@@ -45,23 +45,15 @@ body
 	font-size: 1.5em;
 	text-align: center;
 }
-#currentTime
+.currentTime
 {
-	/*position: absolute;*/
-	/*top: 0px;
-	bottom: 0px;*/
-	/*width: 20px;*/
-	/*margin-top: 0;
-	margin-bottom: 0;*/
-	/*margin-right: 0;*/
+	font-size: 2em;
 	/*background-color: black;*/
 	/*border: solid 1px;*/
-	/*width: 40px;
-	height: 20px;*/
 }
 #buttonsDiv
 {
-	/*background-color: black;*/
+	background-color: black;
 }
 #banner
 {
@@ -70,14 +62,14 @@ body
 }
 #wordPlacement
 {
-	font-size: 1.5em;
+	font-size: 2em;
 }
 .buttons
 {
 	border: none;
 	padding: 5px 20px;
-	color: black;
-	background-color: white;
+	color: white;
+	background-color: black;
 	text-align: center;
 	/*font-size: 1em;*/
 	margin: 0;
@@ -85,8 +77,8 @@ body
 }
 .buttons:hover
 {
-	color: white;
-	background-color: black;
+	color: black;
+	background-color: white;
 	/*background-color: #d9d9d9;*/
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
