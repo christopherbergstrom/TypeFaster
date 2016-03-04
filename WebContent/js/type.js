@@ -74,7 +74,7 @@ function init()
     }
     var instructions = document.createElement("p");
     instructions.setAttribute("id", "instructions");
-    instructions.innerHTML = "Type the word on the screen and hit enter. The faster you type, the more points you get. You get a strike if you miss type a word or if the time runs out. Get three strikes and you lose.";
+    instructions.innerHTML = "Type the word on the screen and hit enter. The faster you type, the more points you get. You get a strike if you mistype a word or if the time runs out. Get three strikes and you lose.";
     body.appendChild(instructions);
   });
 }
