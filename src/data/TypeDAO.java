@@ -25,4 +25,18 @@ public class TypeDAO
 //		return em.createQuery("SELECT s FROM Scores s WHERE s.id like :number", Scores.class).setParameter("number", number).getResultList();
 		return em.createQuery("SELECT s FROM Scores s", Scores.class).getResultList();
 	}
+	
+	public Boolean createScore(Scores score)
+	{
+		System.out.println(score);
+		em.persist(score);
+		if (!em.contains(score))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 }

@@ -230,6 +230,20 @@ function gameOver()
   enter = document.createElement("button");
   enter.innerHTML = "Enter Score";
   enterScoreDiv.appendChild(enter);
+  enter.addEventListener("click", function()
+  {
+    // var fi = document.enterScoreDiv.select0.value;
+    // var mi = document.enterScoreDiv.select1.value;
+    // var li = document.enterScoreDiv.select2.value;
+    var fi = document.getElementById("select0");
+    var mi = document.getElementById("select1");
+    var li = document.getElementById("select2");
+    var letters = fi.value+mi.value+li.value;
+
+    var obj = {initials:letters, score:points};
+    // console.log("PUT", "http://localhost:8080/MPGTracker/rest/mpg", obj);
+    updateData("PUT", "http://localhost:8080/TypeFaster/rest/score", obj);
+  });
 }
 
 function popLetters()
@@ -238,6 +252,7 @@ function popLetters()
   for (var i = 0; i < selects.length; i++)
   {
     var select = document.createElement("select");
+    select.setAttribute("id", "select"+[i]);
     for (var j = 0; j < characters.length; j++)
     {
       var option = document.createElement("option");
@@ -434,28 +449,4 @@ function updateData(method, url, object, callback)
 //   updateData("PUT", "http://localhost:8080/TypeFaster/rest/score", obj);
 // });
 // // clearTable();
-// }
-
-// function updateData(method, url, object, callback)
-// {
-//     var xhr = new XMLHttpRequest();
-//     xhr.open(method,url);
-//     xhr.setRequestHeader("Content-Type", "application/json");
-//     xhr.onreadystatechange=function ()
-//     {
-//         // console.log(xhr.status);
-//         // console.log(xhr.readyState);
-//         // console.log(xhr.responseText);
-//         // console.log(xhr.getAllResponseHeaders());
-//
-//     }
-//     if (object)
-//     {
-//         xhr.send(JSON.stringify(object));
-//     }
-//     else
-//     {
-//         xhr.send(null);
-//     }
-//     // popSelect();
 // }
