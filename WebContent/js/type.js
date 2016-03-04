@@ -36,6 +36,7 @@ var gamePoints;
 var gameStrikes;
 var gameOverText;
 var enter;
+var again;
 
 var created = false;
 
@@ -50,6 +51,11 @@ function init()
   });
   score.addEventListener("click", function()
   {
+    table = document.getElementById("table");
+    if(table)
+    {
+      table.parentNode.removeChild(table);
+    }
     getScores(scores);
   });
   menu.addEventListener("click", function()
@@ -243,6 +249,13 @@ function gameOver()
     var obj = {initials:letters, score:points};
     // console.log("PUT", "http://localhost:8080/MPGTracker/rest/mpg", obj);
     updateData("PUT", "http://localhost:8080/TypeFaster/rest/score", obj);
+  });
+  again = document.createElement("button");
+  again.innerHTML = "Play Again?";
+  enterScoreDiv.appendChild(again);
+  again.addEventListener("click", function()
+  {
+    location.reload();
   });
 }
 

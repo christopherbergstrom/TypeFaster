@@ -23,7 +23,7 @@ public class TypeDAO
 	{
 //		int number = (1+(int)(Math.random()*28));
 //		return em.createQuery("SELECT s FROM Scores s WHERE s.id like :number", Scores.class).setParameter("number", number).getResultList();
-		return em.createQuery("SELECT s FROM Scores s", Scores.class).getResultList();
+		return em.createQuery("SELECT s FROM Scores s ORDER BY s.score DESC", Scores.class).setMaxResults(10).getResultList();
 	}
 	
 	public Boolean createScore(Scores score)
