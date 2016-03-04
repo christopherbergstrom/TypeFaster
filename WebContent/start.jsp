@@ -27,6 +27,8 @@
 
 		<div id = "enterScoreDiv"></div>
 
+		<%-- <audio id = "audio"><source src="bananafinal.m4a" type="audio/m4a"></audio> --%>
+
 		<script src = "js/type.js"></script>
 	</body>
 </html>

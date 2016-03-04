@@ -12,6 +12,7 @@ var formDiv = document.getElementById("formDiv");
 var extrasDiv = document.getElementById("extrasDiv");
 var gameOverDiv = document.getElementById("gameOverDiv");
 var enterScoreDiv = document.getElementById("enterScoreDiv");
+// var audio = document.getElementById("audio");
 
 var time;
 var wordPlay;
@@ -218,23 +219,8 @@ function gameLogic()
       gameStrikes.innerHTML = "Strikes: "+strikes;
       console.log("strikes: "+strikes);
       document.bgColor = "e60000";
-      // document.bgColor = "ffffff";
+      // audio.play();
       window.setTimeout(function(e){document.bgColor = "ffffff";}, 30);
-
-      // function flash() {
-      //  if(flashStep==1) {
-      //  document.bgColor="FFFF00";
-      //  flashStep=2;
-      //  }
-      //  else {
-      //  document.bgColor="FF0000";
-      //  flashStep=1;
-      //  }
-      //  }
-      //  var flashStep = 1;
-      //  var task = window.setInterval(flash,1000);
-
-
       clearInterval(time);
       startGame2();
       removeForm = document.getElementById("formy");
@@ -287,6 +273,7 @@ function popLetters()
   {
     var select = document.createElement("select");
     select.setAttribute("id", "select"+[i]);
+    select.setAttribute("class", "buttons");
     for (var j = 0; j < characters.length; j++)
     {
       var option = document.createElement("option");
@@ -378,6 +365,9 @@ function startTime()
       strikes ++;
       gameStrikes.innerHTML = "Strikes: "+strikes;
       console.log("strikes: "+strikes);
+      document.bgColor = "e60000";
+      // audio.play();
+      window.setTimeout(function(e){document.bgColor = "ffffff";}, 30);
       clearInterval(time);
       startGame2();
       removeForm = document.getElementById("formy");
