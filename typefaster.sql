@@ -36,7 +36,7 @@ CREATE TABLE `highscores` (
 
 LOCK TABLES `highscores` WRITE;
 /*!40000 ALTER TABLE `highscores` DISABLE KEYS */;
-INSERT INTO `highscores` VALUES (1,'CRB',1),(2,'CCB',2);
+INSERT INTO `highscores` VALUES (1,'CCB',477947);
 /*!40000 ALTER TABLE `highscores` ENABLE KEYS */;
 UNLOCK TABLES;
 

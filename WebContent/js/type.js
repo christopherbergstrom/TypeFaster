@@ -217,6 +217,24 @@ function gameLogic()
       strikes ++;
       gameStrikes.innerHTML = "Strikes: "+strikes;
       console.log("strikes: "+strikes);
+      document.bgColor = "e60000";
+      // document.bgColor = "ffffff";
+      window.setTimeout(function(e){document.bgColor = "ffffff";}, 30);
+
+      // function flash() {
+      //  if(flashStep==1) {
+      //  document.bgColor="FFFF00";
+      //  flashStep=2;
+      //  }
+      //  else {
+      //  document.bgColor="FF0000";
+      //  flashStep=1;
+      //  }
+      //  }
+      //  var flashStep = 1;
+      //  var task = window.setInterval(flash,1000);
+
+
       clearInterval(time);
       startGame2();
       removeForm = document.getElementById("formy");
