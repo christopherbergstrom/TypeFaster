@@ -11,6 +11,7 @@ var wordPlacementDiv = document.getElementById("wordPlacementDiv");
 var formDiv = document.getElementById("formDiv");
 var extrasDiv = document.getElementById("extrasDiv");
 var gameOverDiv = document.getElementById("gameOverDiv");
+var enterScoreDiv = document.getElementById("enterScoreDiv");
 
 // var start = document.getElementById("start");
 // var score = document.getElementById("score");
@@ -21,7 +22,7 @@ var time;
 var wordPlay;
 var points;
 var strikes;
-var number = 7;
+var number = 5000;
 var wordComputer;
 var wordUser;
 var table;
@@ -34,6 +35,7 @@ var submit;
 var gamePoints;
 var gameStrikes;
 var gameOverText;
+var enter;
 
 var created = false;
 
@@ -224,7 +226,74 @@ function gameOver()
   gameOverText.innerHTML = "GAME OVER";
   gamePoints.innerHTML = "Final Points: "+points;
   gameStrikes.innerHTML = "Strikes: "+strikes;
+  popLetters();
+  enter = document.createElement("button");
+  enter.innerHTML = "Enter Score";
+  enterScoreDiv.appendChild(enter);
 }
+
+function popLetters()
+{
+
+  for (var i = 0; i < selects.length; i++)
+  {
+    var select = document.createElement("select");
+    for (var j = 0; j < characters.length; j++)
+    {
+      var option = document.createElement("option");
+      // option.value = characters[j].character;
+      option.innerHTML = characters[j].character;
+      select.appendChild(option);
+    }
+    enterScoreDiv.appendChild(select);
+  }
+
+}
+
+var selects = [
+    { name: 'fI'},
+    { name: 'mI'},
+    { name: 'lI'}
+];
+
+var characters = [
+    { character: 'A'},
+    { character: 'B'},
+    { character: 'C'},
+    { character: 'D'},
+    { character: 'E'},
+    { character: 'F'},
+    { character: 'G'},
+    { character: 'H'},
+    { character: 'I'},
+    { character: 'J'},
+    { character: 'K'},
+    { character: 'L'},
+    { character: 'M'},
+    { character: 'N'},
+    { character: 'O'},
+    { character: 'P'},
+    { character: 'Q'},
+    { character: 'R'},
+    { character: 'S'},
+    { character: 'T'},
+    { character: 'U'},
+    { character: 'V'},
+    { character: 'W'},
+    { character: 'X'},
+    { character: 'Y'},
+    { character: 'Z'},
+    { character: '0'},
+    { character: '1'},
+    { character: '2'},
+    { character: '3'},
+    { character: '4'},
+    { character: '5'},
+    { character: '6'},
+    { character: '7'},
+    { character: '8'},
+    { character: '9'},
+];
 
 function startTime()
 {
@@ -235,7 +304,7 @@ function startTime()
   {
     console.log("in set interval");
     // console.log(currentTime.innerHTML);
-    currentTime.innerHTML --;
+    currentTime.innerHTML -=1;
     if (currentTime.innerHTML <= 0)
     {
       strikes ++;
@@ -243,10 +312,9 @@ function startTime()
       console.log("strikes: "+strikes);
       clearInterval(time);
       startGame2();
-
       form.parentNode.removeChild(form);
     }
-  }, 1000);
+  }, 1);
 }
 
 var getWord = function(callback)

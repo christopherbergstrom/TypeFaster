@@ -29,6 +29,8 @@
 
 		<div id = "extrasDiv"></div>
 
+		<div id = "enterScoreDiv"></div>
+
 		<script src = "js/type.js"></script>
 	</body>
 </html>
