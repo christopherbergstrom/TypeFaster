@@ -44,7 +44,8 @@ function init()
   {
     clearInterval(time);
     clearButtons();
-    startGame();
+    countdown();
+    window.setTimeout(function(){startGame();}, 3000);
   });
   score.addEventListener("click", function()
   {
@@ -74,16 +75,16 @@ function init()
     }
     var instructions = document.createElement("p");
     instructions.setAttribute("id", "instructions");
-    instructions.innerHTML = "Type the word on the screen and hit enter. The faster you type, the more points you get. You get a strike if you mistype a word or if the time runs out. Get three strikes and you lose.";
+    instructions.innerHTML = "Type the word on the screen and hit enter. The faster you type, the more points you earn. Words are case sensitive. If you mistype a word or if the time runs out, you get a strike. If you get three strikes, the game is over.";
     body.appendChild(instructions);
   });
 }
 
-removeForm = document.getElementById("formy");
-if(removeForm)
-{
-  removeForm.parentNode.removeChild(removeForm);
-}
+// removeForm = document.getElementById("formy");
+// if(removeForm)
+// {
+//   removeForm.parentNode.removeChild(removeForm);
+// }
 
 function createButtons()
 {
@@ -118,6 +119,18 @@ function clearButtons()
   menu.parentNode.removeChild(menu);
 }
 
+function countdown()
+{
+  console.log("in countdown");
+  var startingNumbers = document.createElement("p");
+  startingNumbers.setAttribute("id", "startingNumbers");
+  startingNumbers.innerHTML = "3";
+  body.appendChild(startingNumbers);
+  window.setTimeout(function(e){startingNumbers.innerHTML = "2";}, 1000);
+  window.setTimeout(function(e){startingNumbers.innerHTML = "1";}, 2000);
+  window.setTimeout(function(e){startingNumbers.parentNode.removeChild(startingNumbers);}, 3000);
+}
+
 function createForm()
 {
   form = document.createElement("form");
@@ -132,7 +145,7 @@ function createForm()
   submit.setAttribute("name", "submit");
   submit.setAttribute("value", "Enter");
   submit.setAttribute("class", "buttons");
-  input.setAttribute("placeholder", "TYPE HERE!!!");
+  input.setAttribute("placeholder", "type here");
   form.appendChild(input);
   form.appendChild(submit);
   formDiv.appendChild(form);
@@ -258,7 +271,7 @@ function gameOver()
   });
   again = document.createElement("button");
   again.setAttribute("class", "buttons");
-  again.innerHTML = "Play Again?";
+  again.innerHTML = "Play Again";
   enterScoreDiv.appendChild(again);
   again.addEventListener("click", function()
   {

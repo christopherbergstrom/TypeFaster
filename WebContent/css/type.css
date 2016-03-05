@@ -1,54 +1,54 @@
 #ten
 {
-	color: #000000;
+	color: #00ffff;
 }
 #nine
 {
-	color: #1a0000;
+	color: #00ffcc;
 }
 #eight
 {
-	color: #330000;
+	color: #ccccff;
 }
 #seven
 {
-	color: #4d0000;
+	color: #ffccff;
 }
 #six
 {
-	color: #660000;
+	color: #ffcccc;
 }
 #five
 {
-	color: #800000;
+	color: #ffcc99;
 }
 #four
 {
-	color: #990000;
+	color: #ffffcc;
 }
 #three
 {
-	color: #b30000;
+	color: #ff9999;
 }
 #two
 {
-	color: #cc0000;
+	color: #ff80aa;
 }
 #one
 {
-	color: #e60000;
+	color: #ccff99;
 }
 body
 {
 	/*background-color: #a6a6a6;*/
-	font-family: Times;
+	font-family: arial;
 	font-size: 1.5em;
 	text-align: center;
 }
 .currentTime
 {
 	font-size: 2em;
-	/*background-color: black;*/
+	background-color: black;
 	/*border: solid 1px;*/
 }
 #buttonsDiv
@@ -57,7 +57,9 @@ body
 }
 #banner
 {
-	background-color: #3399ff;
+	/*background-color: #3399ff;*/
+	/*background-color: black;*/
+	color: black;
 	margin: 0;
 }
 #wordPlacement
@@ -102,4 +104,8 @@ table, th, td
 {
 	margin-top: 1em;
 	/*padding-top: 1em;*/
+}
+#startingNumbers
+{
+	font-size: 5em;
 }
