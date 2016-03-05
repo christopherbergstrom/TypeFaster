@@ -73,6 +73,7 @@ body
 	text-align: center;
 	/*font-size: 1em;*/
 	margin: 0;
+	/*padding-bottom: 1em; */
 	/*border-radius: 25px;*/
 }
 .buttons:hover
@@ -90,14 +91,15 @@ form
 table, th, td
 {
   border: 2px solid;
-  border-style: solid groove solid ridge;
+  border-style: solid;
   /* border-style: solid ridge solid groove; */
   padding: 5px;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
-table
+#table
 {
-	padding-top: 10px;
+	margin-top: 1em;
+	/*padding-top: 1em;*/
 }

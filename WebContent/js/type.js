@@ -254,7 +254,7 @@ function gameOver()
     var obj = {initials:letters, score:points};
     updateData("PUT", "rest/score", obj);
     enter.parentNode.removeChild(enter);
-    window.setTimeout(function(e){getScores(scores)}, 100);
+    window.setTimeout(function(e){getScores(scores)}, 500);
   });
   again = document.createElement("button");
   again.setAttribute("class", "buttons");
