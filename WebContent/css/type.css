@@ -1,0 +1,111 @@
+#ten
+{
+	color: #00ffff;
+}
+#nine
+{
+	color: #00ffcc;
+}
+#eight
+{
+	color: #ccccff;
+}
+#seven
+{
+	color: #ffccff;
+}
+#six
+{
+	color: #ffcccc;
+}
+#five
+{
+	color: #ffcc99;
+}
+#four
+{
+	color: #ffffcc;
+}
+#three
+{
+	color: #ff9999;
+}
+#two
+{
+	color: #ff80aa;
+}
+#one
+{
+	color: #ccff99;
+}
+body
+{
+	/*background-color: #a6a6a6;*/
+	font-family: arial;
+	font-size: 1.5em;
+	text-align: center;
+}
+.currentTime
+{
+	font-size: 2em;
+	background-color: black;
+	/*border: solid 1px;*/
+}
+#buttonsDiv
+{
+	background-color: black;
+}
+#banner
+{
+	/*background-color: #3399ff;*/
+	/*background-color: black;*/
+	color: black;
+	margin: 0;
+}
+#wordPlacement
+{
+	font-size: 2em;
+}
+.buttons
+{
+	border: none;
+	padding: 5px 20px;
+	color: white;
+	background-color: black;
+	text-align: center;
+	/*font-size: 1em;*/
+	margin: 0;
+	/*padding-bottom: 1em; */
+	/*border-radius: 25px;*/
+}
+.buttons:hover
+{
+	color: black;
+	background-color: white;
+	/*background-color: #d9d9d9;*/
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+form
+{
+	/*border-radius: 25px;*/
+	/*font-size: 1em;*/
+}
+table, th, td
+{
+  border: 2px solid;
+  border-style: solid;
+  /* border-style: solid ridge solid groove; */
+  padding: 5px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+#table
+{
+	margin-top: 1em;
+	/*padding-top: 1em;*/
+}
+#startingNumbers
+{
+	font-size: 5em;
+}
