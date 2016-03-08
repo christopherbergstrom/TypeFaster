@@ -15,7 +15,7 @@ public class TypeDAO
 	
 	public Words getWord()
 	{
-		int number = (1+(int)(Math.random()*187));
+		int number = (1+(int)(Math.random()*2056));
 		return em.createQuery("SELECT w FROM Words w WHERE w.id like :number", Words.class).setParameter("number", number).getSingleResult();
 	}
 	
