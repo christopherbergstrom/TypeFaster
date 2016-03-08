@@ -268,6 +268,9 @@ function gameOver()
     updateData("PUT", "rest/score", obj);
     enter.parentNode.removeChild(enter);
     window.setTimeout(function(e){getScores(scores)}, 500);
+    fi.parentNode.removeChild(fi);
+    mi.parentNode.removeChild(mi);
+    li.parentNode.removeChild(li);
   });
   again = document.createElement("button");
   again.setAttribute("class", "buttons");
