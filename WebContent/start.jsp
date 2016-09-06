@@ -22,14 +22,11 @@
 
 		<div id = "formDiv"></div>
 
-		<div id = "gameOverDiv">
-		</div>
+		<div id = "gameOverDiv"></div>
 
 		<div id = "extrasDiv"></div>
 
 		<div id = "enterScoreDiv"></div>
-
-		<%-- <audio id = "audio"><source src="bananafinal.m4a" type="audio/m4a"></audio> --%>
 
 		<script src = "js/type.js"></script>
 	</body>

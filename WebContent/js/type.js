@@ -28,9 +28,10 @@ var menu;
 var form;
 var input;
 var submit;
+var gameOverText;
 var gamePoints;
 var gameStrikes;
-var gameOverText;
+var wpm;
 var enter;
 var again;
 var instructions;
@@ -121,7 +122,7 @@ function clearButtons()
 
 function countdown()
 {
-  console.log("in countdown");
+  // console.log("in countdown");
   var startingNumbers = document.createElement("p");
   startingNumbers.setAttribute("id", "startingNumbers");
   startingNumbers.innerHTML = "3";
@@ -150,22 +151,26 @@ function createForm()
   form.appendChild(submit);
   formDiv.appendChild(form);
 }
+gameOverText = document.createElement("p");
+gameOverText.setAttribute("id", "gameOverText");
+gameOverText.innerHTML = "";
 gamePoints = document.createElement("p");
 gamePoints.setAttribute("id", "gamePoints");
 gamePoints.innerHTML = "Points: ";
 gameStrikes = document.createElement("p");
 gameStrikes.setAttribute("id", "gameStrikes");
 gameStrikes.innerHTML = "Strikes: ";
-gameOverText = document.createElement("p");
-gameOverText.setAttribute("id", "gameOverText");
-gameOverText.innerHTML = "";
+wpm = document.createElement("p");
+wpm.setAttribute("id", "wpm");
+wpm.innerHTML = "";
 
 function startGame()
 {
-  console.log("in start game");
+  // console.log("in start game");
+  gameOverDiv.appendChild(gameOverText);
   extrasDiv.appendChild(gamePoints);
   extrasDiv.appendChild(gameStrikes);
-  gameOverDiv.appendChild(gameOverText);
+  extrasDiv.appendChild(wpm);
   gamePoints.innerHTML = "Points: "+0;
   gameStrikes.innerHTML = "Strikes: "+0;
   gameOverText.innerHTML = "";
@@ -173,19 +178,15 @@ function startGame()
   strikes = 0;
   startGame2();
 }
-var x;
 function startGame2()
 {
-  console.log("in start game2!!!");
+  // console.log("in start game2!!!");
   createForm();
-  x = 1;
-  x++;
-  console.log("x: "+x);
   if(strikes < 3)
   {
     startTime();
-    console.log("in if statement");
-    console.log("strikes: "+strikes);
+    // console.log("in if statement");
+    // console.log("strikes: "+strikes);
     getWord(word);
   }
   else
@@ -196,27 +197,28 @@ function startGame2()
 
 function gameLogic()
 {
-  console.log("in game logic");
+  // console.log("in game logic");
   input.value = "";
   input.focus();
   document.getElementById("formy").reset();
-  console.log("text field: "+input.value);
+  // console.log("text field: "+input.value);
   wordComputer = wordPlay;
   form.submit.addEventListener("click", function(e)
   {
     e.preventDefault();
     wordUser = document.form.input.value;
     var equal = wordUser.localeCompare(wordComputer);
-    console.log("user word: "+wordUser);
-    console.log("computer word: "+wordComputer);
-    console.log("equal: "+equal);
-    console.log("time: "+currentTime.innerHTML);
+    // console.log("user word: "+wordUser);
+    // console.log("computer word: "+wordComputer);
+    // console.log("equal: "+equal);
+    // console.log("time: "+currentTime.innerHTML);
     if(equal === 0)
     {
-      var intPoint = parseInt(currentTime.innerHTML);
+      // var intPoint = parseInt(currentTime.innerHTML);
+      var intPoint = ((wordUser.length * 10) * 19);
       points += intPoint;
       gamePoints.innerHTML = "Points: "+points;
-      console.log("points: "+points);
+      // console.log("points: "+points);
       clearInterval(time);
       startGame2();
       removeForm = document.getElementById("formy");
@@ -230,7 +232,7 @@ function gameLogic()
     {
       strikes ++;
       gameStrikes.innerHTML = "Strikes: "+strikes;
-      console.log("strikes: "+strikes);
+      // console.log("strikes: "+strikes);
       document.bgColor = "e60000";
       // audio.play();
       window.setTimeout(function(e){document.bgColor = "ffffff";}, 30);
@@ -247,11 +249,12 @@ function gameLogic()
 
 function gameOver()
 {
-  console.log("in game over");
+  // console.log("in game over");
   form.parentNode.removeChild(form);
   gameOverText.innerHTML = "GAME OVER";
+  gameStrikes.innerHTML = "Points: "+points;
+  wpm.innerHTML = "Words Per Minute: "+strikes;
   gamePoints.innerHTML = "Final Points: "+points;
-  gameStrikes.innerHTML = "Strikes: "+strikes;
   popLetters();
   enter = document.createElement("button");
   enter.setAttribute("class", "buttons");
@@ -262,19 +265,19 @@ function gameOver()
     var fi = document.getElementById("select0");
     var mi = document.getElementById("select1");
     var li = document.getElementById("select2");
-    if (typeof(Storage) !== "undefined") 
+    if (typeof(Storage) !== "undefined")
     {
-        if (localStorage.fI) 
+        if (localStorage.fI)
             localStorage.fI = fi.value;
-        else 
+        else
             localStorage.fI = fi.value;
-        if (localStorage.mI) 
+        if (localStorage.mI)
         	localStorage.mI = mi.value;
-        else 
+        else
         	localStorage.mI = mi.value;
-        if (localStorage.lI) 
+        if (localStorage.lI)
         	localStorage.lI = li.value;
-        else 
+        else
         	localStorage.lI = li.value;
 	}
     var letters = fi.value+mi.value+li.value;
@@ -307,28 +310,28 @@ function popLetters()
     {
       var option = document.createElement("option");
       option.innerHTML = characters[j].character;
-      if (typeof(Storage) !== "undefined") 
+      if (typeof(Storage) !== "undefined")
       {
     	  if (i === 0)
-    	  {    		  
+    	  {
     		  if (localStorage.fI)
-    		  {    			  
+    		  {
     			  if (localStorage.fI === option.innerHTML)
     				  option.selected = true;
     		  }
     	  }
     	  else if (i === 1)
-    	  {    		  
+    	  {
     		  if (localStorage.mI)
-    		  {    			  
+    		  {
     			  if (localStorage.mI === option.innerHTML)
     				  option.selected = true;
     		  }
     	  }
     	  else if (i === 2)
-    	  {    		  
+    	  {
     		  if (localStorage.lI)
-    		  {    			  
+    		  {
     			  if (localStorage.lI === option.innerHTML)
     				  option.selected = true;
     		  }
@@ -387,12 +390,12 @@ var characters = [
 
 function startTime()
 {
-  console.log("in start time");
+  // console.log("in start time");
   number -=100;
   currentTime.innerHTML = number;
   time = setInterval(function()
   {
-    console.log("in set interval");
+    // console.log("in set interval");
     currentTime.innerHTML -=1;
     currentTime.setAttribute("class", "currentTime");
     if (currentTime.innerHTML <= 10100)
@@ -419,7 +422,7 @@ function startTime()
     {
       strikes ++;
       gameStrikes.innerHTML = "Strikes: "+strikes;
-      console.log("strikes: "+strikes);
+      // console.log("strikes: "+strikes);
       document.bgColor = "e60000";
       // audio.play();
       window.setTimeout(function(e){document.bgColor = "ffffff";}, 30);
@@ -461,12 +464,12 @@ var getScores = function(callback)
 {
   var xhr = new XMLHttpRequest();
   xhr.open("GET", "rest/getScores");
-  // console.log(xhr.status);
-  // console.log(xhr.getAllResponseHeaders());
+  // // console.log(xhr.status);
+  // // console.log(xhr.getAllResponseHeaders());
   xhr.onreadystatechange = function()
   {
-    // console.log(xhr.status);
-    // console.log(xhr.getAllResponseHeaders());
+    // // console.log(xhr.status);
+    // // console.log(xhr.getAllResponseHeaders());
     if (xhr.readyState == 4 && xhr.status < 400)
     {
       var scores = JSON.parse(xhr.responseText);
@@ -511,10 +514,10 @@ function updateData(method, url, object, callback)
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange=function ()
     {
-        // console.log(xhr.status);
-        // console.log(xhr.readyState);
-        // console.log(xhr.responseText);
-        // console.log(xhr.getAllResponseHeaders());
+        // // console.log(xhr.status);
+        // // console.log(xhr.readyState);
+        // // console.log(xhr.responseText);
+        // // console.log(xhr.getAllResponseHeaders());
     }
     if (object)
     {
