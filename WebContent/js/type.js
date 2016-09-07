@@ -12,13 +12,14 @@ var formDiv = document.getElementById("formDiv");
 var extrasDiv = document.getElementById("extrasDiv");
 var gameOverDiv = document.getElementById("gameOverDiv");
 var enterScoreDiv = document.getElementById("enterScoreDiv");
-// var audio = document.getElementById("audio");
 
+var timeKeeper = 0;
+var totalWords = 0;
+var timeInterval;
 var time;
 var wordPlay;
 var points;
-var strikes;
-var number = 10100;
+var number = 10000;
 var wordComputer;
 var wordUser;
 var table;
@@ -30,8 +31,8 @@ var input;
 var submit;
 var gameOverText;
 var gamePoints;
-var gameStrikes;
-var wpm;
+var gameFinalPoints;
+var gameWordCount;
 var enter;
 var again;
 var instructions;
@@ -43,7 +44,7 @@ function init()
   createButtons();
   start.addEventListener("click", function()
   {
-    clearInterval(time);
+    // clearInterval(time);
     clearButtons();
     countdown();
     window.setTimeout(function(){startGame();}, 3000);
@@ -76,16 +77,10 @@ function init()
     }
     var instructions = document.createElement("p");
     instructions.setAttribute("id", "instructions");
-    instructions.innerHTML = "Type the word on the screen and hit enter. The faster you type, the more points you earn. Words are case sensitive. If you mistype a word or if the time runs out, you get a strike. If you get three strikes, the game is over.";
+    instructions.innerHTML = "Type the word on the screen and hit enter. The faster you type, the more points you earn. Words are case sensitive. Each word you type correctly makes your \"Word Count\" go higher, each word you type incorrectly makes your \"Word Count\" go lower, try to get your \"Word Count\" as high as you can for a score multiplyer at the end of the game. If the time runs out the game is over.";
     body.appendChild(instructions);
   });
 }
-
-// removeForm = document.getElementById("formy");
-// if(removeForm)
-// {
-//   removeForm.parentNode.removeChild(removeForm);
-// }
 
 function createButtons()
 {
@@ -101,6 +96,10 @@ function createButtons()
   menu.setAttribute("class", "buttons");
   menu.innerHTML = "Instructions";
   buttonsDiv.appendChild(menu);
+  var instructions = document.createElement("p");
+  instructions.setAttribute("id", "instructions");
+  instructions.innerHTML = "Type the word on the screen and hit enter. The faster you type, the more points you earn. Words are case sensitive. Each word you type correctly makes your \"Word Count\" go higher, each word you type incorrectly makes your \"Word Count\" go lower, try to get your \"Word Count\" as high as you can for a score multiplyer at the end of the game. If the time runs out the game is over.";
+  body.appendChild(instructions);
 }
 
 function clearButtons()
@@ -146,7 +145,7 @@ function createForm()
   submit.setAttribute("name", "submit");
   submit.setAttribute("value", "Enter");
   submit.setAttribute("class", "buttons");
-  input.setAttribute("placeholder", "type here");
+  // input.setAttribute("placeholder", "type here");
   form.appendChild(input);
   form.appendChild(submit);
   formDiv.appendChild(form);
@@ -156,43 +155,48 @@ gameOverText.setAttribute("id", "gameOverText");
 gameOverText.innerHTML = "";
 gamePoints = document.createElement("p");
 gamePoints.setAttribute("id", "gamePoints");
-gamePoints.innerHTML = "Points: ";
-gameStrikes = document.createElement("p");
-gameStrikes.setAttribute("id", "gameStrikes");
-gameStrikes.innerHTML = "Strikes: ";
-wpm = document.createElement("p");
-wpm.setAttribute("id", "wpm");
-wpm.innerHTML = "";
+gamePoints.innerHTML = "";
+gameFinalPoints = document.createElement("p");
+gameFinalPoints.setAttribute("id", "gameFinalPoints");
+gameFinalPoints.innerHTML = "";
+gameWordCount = document.createElement("p");
+gameWordCount.setAttribute("id", "gameWordCount");
+gameWordCount.innerHTML = "";
 
 function startGame()
 {
   // console.log("in start game");
   gameOverDiv.appendChild(gameOverText);
   extrasDiv.appendChild(gamePoints);
-  extrasDiv.appendChild(gameStrikes);
-  extrasDiv.appendChild(wpm);
+  extrasDiv.appendChild(gameWordCount);
+  extrasDiv.appendChild(gameFinalPoints);
   gamePoints.innerHTML = "Points: "+0;
-  gameStrikes.innerHTML = "Strikes: "+0;
+  // gameStrikes.innerHTML = "Words Per Minute: "+0;
+  gameWordCount.innerHTML = "Word Count: "+0;
   gameOverText.innerHTML = "";
   points = 0;
   strikes = 0;
   startGame2();
+  timeInterval = setInterval(function()
+  {
+    timeKeeper++;
+  }, 1000);
 }
 function startGame2()
 {
   // console.log("in start game2!!!");
   createForm();
-  if(strikes < 3)
-  {
-    startTime();
-    // console.log("in if statement");
-    // console.log("strikes: "+strikes);
-    getWord(word);
-  }
-  else
-  {
-    gameOver();
-  }
+  startTime();
+  getWord(word);
+  // if(strikes < 3)
+  // {
+  //   // console.log("in if statement");
+  //   // console.log("strikes: "+strikes);
+  // }
+  // else
+  // {
+  //   gameOver();
+  // }
 }
 
 function gameLogic()
@@ -214,35 +218,46 @@ function gameLogic()
     // console.log("time: "+currentTime.innerHTML);
     if(equal === 0)
     {
+      totalWords++;
       // var intPoint = parseInt(currentTime.innerHTML);
       var intPoint = ((wordUser.length * 10) * 19);
       points += intPoint;
       gamePoints.innerHTML = "Points: "+points;
+      gameWordCount.innerHTML = "Word Count: "+totalWords;
       // console.log("points: "+points);
-      clearInterval(time);
-      startGame2();
+      // clearInterval(time);
+      // startGame2();
       removeForm = document.getElementById("formy");
       if(removeForm)
       {
         removeForm.parentNode.removeChild(removeForm);
       }
+      createForm();
+      getWord(word);
       // form.parentNode.removeChild(form);
     }
     else if (equal === 1 || equal === -1)
     {
-      strikes ++;
-      gameStrikes.innerHTML = "Strikes: "+strikes;
+      // strikes ++;
+      if (totalWords > 0)
+      {
+        totalWords--;
+      }
+      // gameStrikes.innerHTML = "Strikes: "+strikes;
+      gameWordCount.innerHTML = "Word Count: "+totalWords;
       // console.log("strikes: "+strikes);
       document.bgColor = "e60000";
       // audio.play();
       window.setTimeout(function(e){document.bgColor = "ffffff";}, 30);
-      clearInterval(time);
-      startGame2();
+      // clearInterval(time);
+      // startGame2();
       removeForm = document.getElementById("formy");
       if(removeForm)
       {
         removeForm.parentNode.removeChild(removeForm);
       }
+      createForm();
+      getWord(word);
     }
   });
 }
@@ -250,11 +265,18 @@ function gameLogic()
 function gameOver()
 {
   // console.log("in game over");
+  window.clearInterval(timeInterval);
   form.parentNode.removeChild(form);
+  var wpmNum = totalWords / (timeKeeper / 60);
   gameOverText.innerHTML = "GAME OVER";
-  gameStrikes.innerHTML = "Points: "+points;
-  wpm.innerHTML = "Words Per Minute: "+strikes;
-  gamePoints.innerHTML = "Final Points: "+points;
+  gamePoints.innerHTML = "Points: "+points;
+  // gameWordCount.innerHTML = "Words Count: "+wpmNum;
+  gameWordCount.innerHTML = "Word Count: "+totalWords;
+  if (totalWords > 0);
+  {
+    points *= totalWords
+  }
+  gameFinalPoints.innerHTML = "Final Points: "+points;
   popLetters();
   enter = document.createElement("button");
   enter.setAttribute("class", "buttons");
@@ -391,50 +413,43 @@ var characters = [
 function startTime()
 {
   // console.log("in start time");
-  number -=100;
+  // number -=100;
   currentTime.innerHTML = number;
   time = setInterval(function()
   {
     // console.log("in set interval");
-    currentTime.innerHTML -=1;
+    number -=1;
+    currentTime.innerHTML = (number);
+    // currentTime.innerHTML = (number/100);
     currentTime.setAttribute("class", "currentTime");
-    if (currentTime.innerHTML <= 10100)
-      currentTime.setAttribute("id","ten");
-    if (currentTime.innerHTML <= 9000)
-      currentTime.setAttribute("id","nine");
-    if (currentTime.innerHTML <= 8000)
-      currentTime.setAttribute("id","eight");
-    if (currentTime.innerHTML <= 7000)
-      currentTime.setAttribute("id","seven");
-    if (currentTime.innerHTML <= 6000)
-      currentTime.setAttribute("id","six");
-    if (currentTime.innerHTML <= 5000)
-      currentTime.setAttribute("id","five");
-    if (currentTime.innerHTML <= 4000)
-      currentTime.setAttribute("id","four");
-    if (currentTime.innerHTML <= 3000)
-      currentTime.setAttribute("id","three");
-    if (currentTime.innerHTML <= 2000)
-      currentTime.setAttribute("id","two");
-    if (currentTime.innerHTML <= 1000)
-      currentTime.setAttribute("id","one");
     if (currentTime.innerHTML <= 0)
     {
-      strikes ++;
-      gameStrikes.innerHTML = "Strikes: "+strikes;
-      // console.log("strikes: "+strikes);
       document.bgColor = "e60000";
-      // audio.play();
       window.setTimeout(function(e){document.bgColor = "ffffff";}, 30);
       clearInterval(time);
-      startGame2();
-      removeForm = document.getElementById("formy");
-      if(removeForm)
-      {
-        removeForm.parentNode.removeChild(removeForm);
-      }
+      gameOver();
     }
-  }, 1);
+    else if (currentTime.innerHTML <= 1000)
+      currentTime.setAttribute("id","one");
+    else if (currentTime.innerHTML <= 2000)
+      currentTime.setAttribute("id","two");
+    else if (currentTime.innerHTML <= 3000)
+      currentTime.setAttribute("id","three");
+    else if (currentTime.innerHTML <= 4000)
+      currentTime.setAttribute("id","four");
+    else if (currentTime.innerHTML <= 5000)
+      currentTime.setAttribute("id","five");
+    else if (currentTime.innerHTML <= 6000)
+      currentTime.setAttribute("id","six");
+    else if (currentTime.innerHTML <= 7000)
+      currentTime.setAttribute("id","seven");
+    else if (currentTime.innerHTML <= 8000)
+      currentTime.setAttribute("id","eight");
+    else if (currentTime.innerHTML <= 9000)
+      currentTime.setAttribute("id","nine");
+    else if (currentTime.innerHTML <= 10000)
+      currentTime.setAttribute("id","ten");
+  }, 10);
 }
 
 var getWord = function(callback)
