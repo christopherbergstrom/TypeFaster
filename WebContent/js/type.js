@@ -19,7 +19,7 @@ var timeInterval;
 var time;
 var wordPlay;
 var points;
-var number = 10000;
+var number = 6000;
 var wordComputer;
 var wordUser;
 var table;
@@ -441,14 +441,6 @@ function startTime()
       currentTime.setAttribute("id","five");
     else if (currentTime.innerHTML <= 6000)
       currentTime.setAttribute("id","six");
-    else if (currentTime.innerHTML <= 7000)
-      currentTime.setAttribute("id","seven");
-    else if (currentTime.innerHTML <= 8000)
-      currentTime.setAttribute("id","eight");
-    else if (currentTime.innerHTML <= 9000)
-      currentTime.setAttribute("id","nine");
-    else if (currentTime.innerHTML <= 10000)
-      currentTime.setAttribute("id","ten");
   }, 10);
 }
 
