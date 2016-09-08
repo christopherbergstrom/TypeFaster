@@ -220,7 +220,7 @@ function gameLogic()
     {
       totalWords++;
       // var intPoint = parseInt(currentTime.innerHTML);
-      var intPoint = ((wordUser.length * 10) * 19);
+      var intPoint = ((wordUser.length * 10) * 7);
       points += intPoint;
       gamePoints.innerHTML = "Points: "+points;
       gameWordCount.innerHTML = "Word Count: "+totalWords;
