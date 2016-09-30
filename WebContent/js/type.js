@@ -98,7 +98,7 @@ function createButtons()
   buttonsDiv.appendChild(menu);
   var instructions = document.createElement("p");
   instructions.setAttribute("id", "instructions");
-  instructions.innerHTML = "Type the word on the screen and hit enter. The faster you type, the more points you earn. Words are case sensitive. Each word you type correctly makes your \"Word Count\" go higher, each word you type incorrectly makes your \"Word Count\" go lower, try to get your \"Word Count\" as high as you can for a score multiplyer at the end of the game. If the time runs out the game is over.";
+  instructions.innerHTML = "Type the word on the screen and hit enter. The faster you type, the more points you earn. Words are case sensitive. Each word you type correctly makes your \"Word Count\" go higher, each word you type incorrectly makes your \"Word Count\" go lower, try to get your \"Word Count\" as high as you can for a score multiplyer at the end of the game. When the time runs out the game is over.";
   body.appendChild(instructions);
 }
 
@@ -306,7 +306,6 @@ function gameOver()
     var obj = {initials:letters, score:points};
     updateData("PUT", "rest/score", obj);
     enter.parentNode.removeChild(enter);
-    window.setTimeout(function(e){getScores(scores)}, 500);
     fi.parentNode.removeChild(fi);
     mi.parentNode.removeChild(mi);
     li.parentNode.removeChild(li);
